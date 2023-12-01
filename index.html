@@ -10,9 +10,14 @@
 
     <script>
 
+        /*we have to make the computer choose a random choice
+        and for that we want to get an integer from 1 to 3 (1, 2 or 3)*/
+
         function getRandomInt(max) {
             return Math.floor(Math.random() * max + 1);
         };
+
+        /*and then we assign a choice from rock paper scissors to the number obtained*/
 
         function getComputerChoice() {
             let number = getRandomInt(3);
@@ -34,25 +39,89 @@
             return choice
         }
 
-        let computerChoice = getComputerChoice();
-        let playerInput = prompt("choose your weapon of choice");
-        let playerChoice = playerInput.toLowerCase();
+        /*we prepare the variables we'll need for the round*/
 
+        let computerChoice;
+        let playerInput;
+        let playerChoice;
 
-        console.log(`computer choice is ${computerChoice}`);
-        console.log(`player choice is ${playerChoice}`);
+        let veredict;
 
+        function playRound(playerChoiceTest, computerChoiceTest) {
 
-        function playRound(playerChoice, computerChoice) {
+            /*we create an input for the player to introduce their choice
+            and then another variable to convert the input into a simpler string
+            so that ROCK, Rock and rock are all converted to "rock"*/
+
+            /*we also call the function to get the computer's choice*/
+
+            let playerInput = prompt("choose your weapon of choice");
+            let playerChoice = playerInput.toLowerCase();
+
+            let computerChoice = getComputerChoice();
+
+            console.log(`player choice is ${playerChoice}`);
+            console.log(`computer choice is ${computerChoice}`);
+
+            /*we load the variables into the arguments of the function*/
+
+            playerChoiceTest = playerChoice;
+            computerChoiceTest = computerChoice;
+
+            /*and we evaluate the results, we did the tie evaluation like this to save code*/
+
             if (playerChoice === computerChoice) {
-                console.log(`computer choice in the function is ${computerChoice}`);
-                console.log(`player choice in the function is ${playerChoice}`);
-                console.log("it's a tie!");
+                veredict = "tie";
+
+            } else if (playerChoice !== computerChoice) {
+
+                switch (playerChoice) {
+                    case "scissors":
+                        if (computerChoice == "paper") {
+                            veredict = "player wins";
+                        } else if (computerChoice == "rock") {
+                            veredict = "computer wins";
+                        }
+                        break
+
+                    case "paper":
+                        if (computerChoice == "rock") {
+                            veredict = "player wins";
+                        } else if (computerChoice == "scissors") {
+                            veredict = "computer wins";
+                        }
+                        break
+
+                    case "rock":
+                        if (computerChoice == "scissors") {
+                            veredict = "player wins";
+                        } else if (computerChoice == "paper") {
+                            veredict = "computer wins";
+                        }
+                        break
+
+                }
             }
+            console.log(veredict);
         }
+
+        /*and we call the function*/
 
         playRound();
 
+        /*in case there was a tie, we created this for loop so that you cannot escape till a winner is chosen*/
+
+        for (i = 0; i != 1; i) {
+            if (veredict === "tie") {
+                console.log("THERE WAS A FUCKING TIE");
+                playRound();
+
+            } else {
+                i++;
+            }
+        }
+
+        /*ignore this*/
 
         /*
     
