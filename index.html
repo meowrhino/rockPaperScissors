@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>rockPaperScissors!</title>
+</head>
+<body>
+
+    <script>
+
+        let playerChoice = "scissors";
+        let computerChoice = "paper";
+
+        function playRound(playerChoice, computerChoice) {
+            if (playerChoice === "rock") {
+                if (computerChoice === "rock") {
+                    console.log("it's a tie!!! rock stares at rock :/");
+                } else if (computerChoice === "paper") {
+                    console.log("player loses, paper eats rock... yum!");
+                } else if (computerChoice === "scissors") {
+                    console.log("player wins! rock beats the shit out of scissors!");
+                }
+            } else if (playerChoice === "paper") {
+                if (computerChoice === "rock") {
+                    console.log("player wins! paper eats rock... yum!");
+                } else if (computerChoice === "paper") {
+                    console.log("it's a tie!!! paper stares at paper :/");
+                } else if (computerChoice === "scissors") {
+                    console.log("player loses, scissors obliterates paper!");
+                }
+            } else if (playerChoice === "scissors"){
+                if (computerChoice === "rock") {
+                    console.log("player loses! rock beats the shit out of scissors!");
+                } else if (computerChoice === "paper") {
+                    console.log("player wins! scissors obliterates paper!");
+                } else if (computerChoice === "scissors") {
+                    console.log("it's a tie!!! scissors stares at scissors :/");
+                }
+            }
+        }
+
+        playRound();
+
+/*
+
+
+        const playerSelection = "rock";
+        const computerSelection = getComputerChoice();
+        console.log(playRound(playerSelection, computerSelection));
+*/
+    </script>
+
+</body>
+</html>
