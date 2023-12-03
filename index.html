@@ -10,14 +10,14 @@
 
     <script>
 
-        /*we have to make the computer choose a random choice
+        /*we have to make the computer choose a random choice between rock, paper and scissors
         and for that we want to get an integer from 1 to 3 (1, 2 or 3)*/
 
         function getRandomInt(max) {
             return Math.floor(Math.random() * max + 1);
         };
 
-        /*and then we assign a choice from rock paper scissors to the number obtained*/
+        /*and then we convert that number to a valid option for the game*/
 
         function getComputerChoice() {
             let number = getRandomInt(3);
@@ -42,44 +42,53 @@
         /*we prepare the variables we'll need for the round*/
 
         let computerChoice;
+
+        /*players input and choice are different bc we can only take rock as an answer
+        so we will convert ROCK and roCk into rock later*/
         let playerInput;
         let playerChoice;
 
         let veredict;
 
-        function playRound(playerChoiceTest, computerChoiceTest) {
+
+
+        /*we also have to be able to store the results of each game to declare the best of 5*/
+
+        let computerVictories;
+        let playerVictories;
+        let ties;
+
+        function playRound() {
 
             /*we create an input for the player to introduce their choice
-            and then another variable to convert the input into a simpler string
+            and convert the input into a simpler string
             so that ROCK, Rock and rock are all converted to "rock"*/
-
-            /*we also call the function to get the computer's choice*/
+            /*it would be cool if this was a function we could call 
+            instead of doing this conversion here AND in the if statement
+            but this is a message for the future manu*/
 
             playerInput = prompt("choose your weapon of choice");
             playerChoice = playerInput.toLowerCase();
             console.log(`player choice is ${playerChoice}`);
 
-
             /*we have to check its a valid input*/
+
             if (playerChoice != 'rock' && playerChoice != 'paper' && playerChoice != 'rock') {
                 console.log('verification started');
                 while (playerChoice !== 'rock' && playerChoice !== 'paper' && playerChoice !== 'rock') {
                     playerInput = prompt("the input you submitted is not a valid one please choose between rock, paper or scissors");
                     playerChoice = playerInput.toLowerCase();
-
-                    console.log('new player input is ' + playerChoice);
                 }
+                console.log('verification was succesful');
+                console.log('new player input is ' + playerChoice);
             }
 
+
+            /*we also call the function to get the computer's choice*/
             computerChoice = getComputerChoice();
             console.log(`computer choice is ${computerChoice}`);
 
-            /*we load the variables into the arguments of the function*/
-
-            playerChoiceTest = playerChoice;
-            computerChoiceTest = computerChoice;
-
-            /*and we evaluate the results, we did the tie evaluation like this to save code*/
+            /*and we evaluate the results*/
 
             if (playerChoice === computerChoice) {
                 veredict = "tie";
@@ -114,6 +123,8 @@
                 }
             }
 
+            /*and we load the results into the variables we created*/
+
             if (veredict === "computer wins") {
                 computerVictories++;
             } else if (veredict === "player wins") {
@@ -124,37 +135,10 @@
 
             console.log(veredict);
             console.log(" ");
-
-            return veredict;
         }
-
-        /*and we call the function*/
-
-        /*
-        playRound();
-        console.log(veredict);
-        */
-
-        /*in case there was a tie, we created this for loop so that you cannot escape till a winner is chosen*/
-
-        for (i = 0; i != 1; i) {
-            if (veredict === "tie") {
-                console.log("THERE WAS A FUCKING TIE");
-                playRound();
-
-            } else {
-                i++;
-            }
-        }
-
-        /*now we're going to try to make a "best of five"*/
-
-        let computerVictories;
-        let playerVictories;
-        let ties;
 
         function game() {
-            /*if (computerVictories < 3 || playerVictories < 3){}*/
+            /*in each game we restart these values so that we "start fresh" each time*/
 
             computerVictories = 0;
             playerVictories = 0;
@@ -165,15 +149,16 @@
                 playRound();
             }
 
+            /*and IF after those 5 rounds they're tied this will code will trigger:*/
+
             while (playerVictories === computerVictories) {
                 console.log("player and computer are tied we must repeat the final round!!!")
+                console.log(" ");
+                console.log("la revancha:")
                 playRound();
-                console.log("now player has " + playerVictories + " wins")
-                console.log("now computer has " + computerVictories + " wins")
             }
 
-            /*we want to check if we did already a round 5 so that it doesnt print 2 times round 5*/
-
+            /*finally we print the results*/
 
             if (computerVictories > playerVictories) {
                 veredictFive = "computer wins best of five";
@@ -181,9 +166,9 @@
                 veredictFive = "player wins best of five";
             } else {
                 veredictFive = "something happened";
-            } /*!!nos hemos quedado aqui!!*/
+            }
 
-            console.log('Veredict five is ' + veredictFive);
+            console.log('Veredict is ' + veredictFive);
             console.log('Computer won ' + computerVictories + ' number of times');
             console.log('Player won ' + playerVictories + ' number of times');
 

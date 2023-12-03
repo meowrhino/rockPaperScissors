@@ -94,3 +94,24 @@ if (i == 6 && playerVictories === computerVictories) {
     
             playRound();
     */
+
+
+
+                    /*and we call the function*/
+
+        /*
+        playRound();
+        console.log(veredict);
+        */
+
+        /*in case there was a tie, we created this for loop so that you cannot escape till a winner is chosen*/
+
+        for (i = 0; i != 1; i) {
+            if (veredict === "tie") {
+                console.log("THERE WAS A FUCKING TIE");
+                playRound();
+
+            } else {
+                i++;
+            }
+        }
