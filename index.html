@@ -55,12 +55,23 @@
 
             /*we also call the function to get the computer's choice*/
 
-            let playerInput = prompt("choose your weapon of choice");
-            let playerChoice = playerInput.toLowerCase();
-
-            let computerChoice = getComputerChoice();
-
+            playerInput = prompt("choose your weapon of choice");
+            playerChoice = playerInput.toLowerCase();
             console.log(`player choice is ${playerChoice}`);
+
+
+            /*we have to check its a valid input*/
+            if (playerChoice != 'rock' && playerChoice != 'paper' && playerChoice != 'rock') {
+                console.log('verification started');
+                while (playerChoice !== 'rock' && playerChoice !== 'paper' && playerChoice !== 'rock') {
+                    playerInput = prompt("the input you submitted is not a valid one please choose between rock, paper or scissors");
+                    playerChoice = playerInput.toLowerCase();
+
+                    console.log('new player input is ' + playerChoice);
+                }
+            }
+
+            computerChoice = getComputerChoice();
             console.log(`computer choice is ${computerChoice}`);
 
             /*we load the variables into the arguments of the function*/
@@ -102,12 +113,27 @@
 
                 }
             }
+
+            if (veredict === "computer wins") {
+                computerVictories++;
+            } else if (veredict === "player wins") {
+                playerVictories++;
+            } else {
+                ties++;
+            }
+
             console.log(veredict);
+            console.log(" ");
+
+            return veredict;
         }
 
         /*and we call the function*/
 
+        /*
         playRound();
+        console.log(veredict);
+        */
 
         /*in case there was a tie, we created this for loop so that you cannot escape till a winner is chosen*/
 
@@ -121,43 +147,50 @@
             }
         }
 
-        /*ignore this*/
+        /*now we're going to try to make a "best of five"*/
 
-        /*
-    
-            let playerChoice = "scissors";
-            let computerChoice = "paper";
-    
-            function playRound(playerChoice, computerChoice) {
-                if (playerChoice === "rock") {
-                    if (computerChoice === "rock") {
-                        console.log("it's a tie!!! rock stares at rock :/");
-                    } else if (computerChoice === "paper") {
-                        console.log("player loses, paper eats rock... yum!");
-                    } else if (computerChoice === "scissors") {
-                        console.log("player wins! rock beats the shit out of scissors!");
-                    }
-                } else if (playerChoice === "paper") {
-                    if (computerChoice === "rock") {
-                        console.log("player wins! paper eats rock... yum!");
-                    } else if (computerChoice === "paper") {
-                        console.log("it's a tie!!! paper stares at paper :/");
-                    } else if (computerChoice === "scissors") {
-                        console.log("player loses, scissors obliterates paper!");
-                    }
-                } else if (playerChoice === "scissors"){
-                    if (computerChoice === "rock") {
-                        console.log("player loses! rock beats the shit out of scissors!");
-                    } else if (computerChoice === "paper") {
-                        console.log("player wins! scissors obliterates paper!");
-                    } else if (computerChoice === "scissors") {
-                        console.log("it's a tie!!! scissors stares at scissors :/");
-                    }
-                }
+        let computerVictories;
+        let playerVictories;
+        let ties;
+
+        function game() {
+            /*if (computerVictories < 3 || playerVictories < 3){}*/
+
+            computerVictories = 0;
+            playerVictories = 0;
+            ties = 0;
+
+            for (i = 1; i < 6; i++) {
+                console.log("round " + i + ":")
+                playRound();
             }
-    
-            playRound();
-    */
+
+            while (playerVictories === computerVictories) {
+                console.log("player and computer are tied we must repeat the final round!!!")
+                playRound();
+                console.log("now player has " + playerVictories + " wins")
+                console.log("now computer has " + computerVictories + " wins")
+            }
+
+            /*we want to check if we did already a round 5 so that it doesnt print 2 times round 5*/
+
+
+            if (computerVictories > playerVictories) {
+                veredictFive = "computer wins best of five";
+            } else if (playerVictories > computerVictories) {
+                veredictFive = "player wins best of five";
+            } else {
+                veredictFive = "something happened";
+            } /*!!nos hemos quedado aqui!!*/
+
+            console.log('Veredict five is ' + veredictFive);
+            console.log('Computer won ' + computerVictories + ' number of times');
+            console.log('Player won ' + playerVictories + ' number of times');
+
+        }
+
+        game();
+
 
     </script>
 
