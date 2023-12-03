@@ -73,9 +73,9 @@
 
             /*we have to check its a valid input*/
 
-            if (playerChoice != 'rock' && playerChoice != 'paper' && playerChoice != 'rock') {
+            if (playerChoice != 'rock' && playerChoice != 'paper' && playerChoice != 'scissors') {
                 console.log('verification started');
-                while (playerChoice !== 'rock' && playerChoice !== 'paper' && playerChoice !== 'rock') {
+                while (playerChoice !== 'rock' && playerChoice !== 'paper' && playerChoice !== 'scissors') {
                     playerInput = prompt("the input you submitted is not a valid one please choose between rock, paper or scissors");
                     playerChoice = playerInput.toLowerCase();
                 }
