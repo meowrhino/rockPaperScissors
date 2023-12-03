@@ -78,6 +78,8 @@
                 while (playerChoice !== 'rock' && playerChoice !== 'paper' && playerChoice !== 'scissors') {
                     playerInput = prompt("the input you submitted is not a valid one please choose between rock, paper or scissors");
                     playerChoice = playerInput.toLowerCase();
+                    /*id love it if the code was able to print each failed attempt :/*/
+                    console.log(playerInput);
                 }
                 console.log('verification was succesful');
                 console.log('new player input is ' + playerChoice);
