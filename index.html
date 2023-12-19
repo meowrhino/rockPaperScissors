@@ -10,6 +10,7 @@
 
     <script>
 
+        /*COMPUTER CHOICE*/
         /*we have to make the computer choose a random choice between rock, paper and scissors
         and for that we want to get an integer from 1 to 3 (1, 2 or 3)*/
 
@@ -50,7 +51,45 @@
 
         let veredict;
 
+        
 
+        /*PLAYER CHOICES*/
+        const body = document.querySelector('body');
+
+        const playerRock = document.createElement("button");
+        //playerRock.cssText = "id: playerRock"
+        playerRock.setAttribute('id', 'playerRock');
+        playerRock.textContent = "do you choose rock?";
+        playerRock.addEventListener('click', () => {
+            playRound("rock");
+        });
+
+        const playerPaper = document.createElement("button");
+        playerPaper.setAttribute('id', 'playerPaper');
+        playerPaper.textContent = "do you choose paper?";
+        playerPaper.addEventListener('click', () => {
+            playRound("paper");
+        });
+
+        const playerScissors = document.createElement("button");
+        playerScissors.setAttribute('id', 'playerScissors');
+        playerScissors.textContent = "do you choose scissors?";
+        playerScissors.addEventListener('click', () => {
+            playRound("scissors");
+        });
+
+
+
+        body.appendChild(playerRock);
+        body.appendChild(playerPaper);
+        body.appendChild(playerScissors);
+
+        const results = document.createElement("div");
+
+        body.appendChild(results);
+
+
+        /*THE GAME*/
 
         /*we also have to be able to store the results of each game to declare the best of 5*/
 
@@ -58,37 +97,29 @@
         let playerVictories;
         let ties;
 
-        function playRound() {
+        function playRound(input) {
+            let playerChoice = input;
 
-            /*we create an input for the player to introduce their choice
-            and convert the input into a simpler string
-            so that ROCK, Rock and rock are all converted to "rock"*/
-            /*it would be cool if this was a function we could call 
-            instead of doing this conversion here AND in the if statement
-            but this is a message for the future manu*/
+            const br = document.createElement("br");
+            results.appendChild(br);
 
-            playerInput = prompt("choose your weapon of choice");
-            playerChoice = playerInput.toLowerCase();
-            console.log(`player choice is ${playerChoice}`);
 
-            /*we have to check its a valid input*/
 
-            if (playerChoice != 'rock' && playerChoice != 'paper' && playerChoice != 'scissors') {
-                console.log('verification started');
-                while (playerChoice !== 'rock' && playerChoice !== 'paper' && playerChoice !== 'scissors') {
-                    playerInput = prompt("the input you submitted is not a valid one please choose between rock, paper or scissors");
-                    playerChoice = playerInput.toLowerCase();
-                    /*id love it if the code was able to print each failed attempt :/*/
-                    console.log(playerInput);
-                }
-                console.log('verification was succesful');
-                console.log('new player input is ' + playerChoice);
-            }
+
+            console.log(input);
+
+            const playerChoiceText = document.createTextNode(`player choice is ${playerChoice}`);
+            results.appendChild(playerChoiceText);
+            results.appendChild(br.cloneNode(true));
+
 
 
             /*we also call the function to get the computer's choice*/
             computerChoice = getComputerChoice();
-            console.log(`computer choice is ${computerChoice}`);
+
+            const computerChoiceText = document.createTextNode(`computer choice is ${computerChoice}`);
+            results.appendChild(computerChoiceText);
+            results.appendChild(br.cloneNode(true));
 
             /*and we evaluate the results*/
 
@@ -135,48 +166,12 @@
                 ties++;
             }
 
-            console.log(veredict);
-            console.log(" ");
+            const veredictText = document.createTextNode(`veredict is ${veredict}`);
+            results.appendChild(veredictText);
+            results.appendChild(br.cloneNode(true));
         }
 
-        function game() {
-            /*in each game we restart these values so that we "start fresh" each time*/
-
-            computerVictories = 0;
-            playerVictories = 0;
-            ties = 0;
-
-            for (i = 1; i < 6; i++) {
-                console.log("round " + i + ":")
-                playRound();
-            }
-
-            /*and IF after those 5 rounds they're tied this will code will trigger:*/
-
-            while (playerVictories === computerVictories) {
-                console.log("player and computer are tied we must repeat the final round!!!")
-                console.log(" ");
-                console.log("la revancha:")
-                playRound();
-            }
-
-            /*finally we print the results*/
-
-            if (computerVictories > playerVictories) {
-                veredictFive = "computer wins best of five";
-            } else if (playerVictories > computerVictories) {
-                veredictFive = "player wins best of five";
-            } else {
-                veredictFive = "something happened";
-            }
-
-            console.log('Veredict is ' + veredictFive);
-            console.log('Computer won ' + computerVictories + ' number of times');
-            console.log('Player won ' + playerVictories + ' number of times');
-
-        }
-
-        game();
+        //playRound();
 
 
     </script>
