@@ -51,7 +51,7 @@
 
         let veredict;
 
-        
+
 
         /*PLAYER CHOICES*/
         const body = document.querySelector('body');
@@ -93,8 +93,8 @@
 
         /*we also have to be able to store the results of each game to declare the best of 5*/
 
-        let computerVictories;
-        let playerVictories;
+        let computerVictories = 0;
+        let playerVictories = 0;
         let ties;
 
         function playRound(input) {
@@ -104,9 +104,6 @@
             results.appendChild(br);
 
 
-
-
-            console.log(input);
 
             const playerChoiceText = document.createTextNode(`player choice is ${playerChoice}`);
             results.appendChild(playerChoiceText);
@@ -119,6 +116,7 @@
 
             const computerChoiceText = document.createTextNode(`computer choice is ${computerChoice}`);
             results.appendChild(computerChoiceText);
+            results.appendChild(br.cloneNode(true));
             results.appendChild(br.cloneNode(true));
 
             /*and we evaluate the results*/
@@ -169,6 +167,41 @@
             const veredictText = document.createTextNode(`veredict is ${veredict}`);
             results.appendChild(veredictText);
             results.appendChild(br.cloneNode(true));
+
+            const playerVictoriesText = document.createTextNode(`player has won ${playerVictories} times`)
+            const computerVictoriesText = document.createTextNode(`computer has won ${computerVictories} times`)
+
+            results.appendChild(playerVictoriesText);
+            results.appendChild(br.cloneNode(true));
+            results.appendChild(computerVictoriesText);
+            results.appendChild(br.cloneNode(true));
+
+            if (playerVictories == 5) {
+                const playerVictoriesText5 = document.createElement('div');
+                playerVictoriesText5.textContent = 'player is the WINNER of 5 rounds';
+                playerVictoriesText5.style.fontSize = '20px';
+                playerVictoriesText5.style.color = 'red';
+                playerVictoriesText5.style.fontWeight = 'bold';
+
+                console.log(playerVictoriesText5);
+
+                results.appendChild(playerVictoriesText5);
+            }
+
+            if (computerVictories == 5) {
+                const computerVictoriesText5 = document.createElement('div');
+                computerVictoriesText5.textContent = 'computer is the WINNER of 5 rounds';
+                computerVictoriesText5.style.fontSize = '20px';
+                computerVictoriesText5.style.color = 'red';
+                computerVictoriesText5.style.fontWeight = 'bold';
+
+                console.log(computerVictoriesText5);
+
+                results.appendChild(computerVictoriesText5);
+            }
+            results.appendChild(br.cloneNode(true));
+            results.appendChild(br.cloneNode(true));
+
         }
 
         //playRound();
