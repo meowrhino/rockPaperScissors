@@ -30,9 +30,34 @@
             text-align: center;
         }
 
-        #results {
+        .results {
+            margin: 20px 30px;
+            padding: 10px 30px;
+            border: 5px dashed indianred;
+            text-align: center;
+        }
+
+        .lastRound {
+            border: 5px dashed maroon;
+            padding: 20px;
+            margin: 20px 0px;
+        }
+
+        .score {
+            border: 5px dashed teal;
+            padding: 20px;
+            margin: 20px 0px;
+        }
+
+        .victoryText {
+            font-size: 20px;
+            color: red;
+            font-weight: bold;
+        }
+
+        .restartButton {
             margin: 10px;
-            border: 5px dotted indianred;
+            padding: 10px 20px;
         }
     </style>
 </head>
@@ -49,22 +74,43 @@
         <button class="choice" id="playerScissors">✌️</button>
     </div>
     <div class="results">
+        <div class="lastRound">
 
+        </div>
+        <div class="score">
+
+        </div>
+        <div class="victoryText">
+
+        </div>
     </div>
     <script>
 
-        /*COMPUTER CHOICE*/
-        /*we have to make the computer choose a random choice between rock, paper and scissors
-        and for that we want to get an integer from 1 to 3 (1, 2 or 3)*/
-        /*and then we convert that number to a valid option for the game*/
+        /*each button will activate the playRound function with the chosen argument*/
+        const playerRock = document.querySelector("#playerRock");
+        playerRock.addEventListener('click', () => {
+            playRound("rock");
+        });
 
-        let computerChoice;
+        const playerPaper = document.querySelector("#playerPaper");
+        playerPaper.addEventListener('click', () => {
+            playRound("paper");
+        });
+
+        const playerScissors = document.querySelector("#playerScissors");
+        playerScissors.addEventListener('click', () => {
+            playRound("scissors");
+        });
+
+
+
+        /*the computer's choice is chosen via a random number between 1 and 3
+        and then that number is converted into an option*/
         function getRandomInt(max) {
             return Math.floor(Math.random() * max + 1);
         };
+
         function getComputerChoice() {
-
-
             let number = getRandomInt(3);
             let choice;
 
@@ -84,65 +130,61 @@
             return choice
         }
 
-        /*we prepare the variables we'll need for the round*/
 
 
-        let veredict;
-
-
-
-        /*PLAYER CHOICES*/
-        let playerChoice;
-
-        const playerRock = document.querySelector("#playerRock");
-        playerRock.addEventListener('click', () => {
-            playRound("rock");
-        });
-
-        const playerPaper = document.querySelector("#playerPaper");
-        playerPaper.addEventListener('click', () => {
-            playRound("paper");
-        });
-
-        const playerScissors = document.querySelector("#playerScissors");
-        playerScissors.addEventListener('click', () => {
-            playRound("scissors");
-        });
-
+        /*we create the variables for the results to be shown*/
         const results = document.querySelector(".results");
+        const lastRound = document.querySelector(".lastRound");
+        const score = document.querySelector(".score");
+        const br = document.createElement("br");
 
-        /*THE GAME*/
-
-        /*we also have to be able to store the results of each game to declare the best of 5*/
-
+        /*and also we create those variables for the game to save each round*/
         let computerVictories = 0;
         let playerVictories = 0;
         let ties;
 
+        /*the game is a best of 5 so we want to show the winner of five 
+        but just once, so we create a boolean that will activate once that is done
+        so that the "if" will not print more than one*/
+        let roundEnded = false;
+
+        /*y ahora si han ganado mas de 5 rondas que se pueda reempezar el juego con un boton*/
+        const restartButton = document.createElement('button');
+        restartButton.setAttribute('class', 'restartButton');
+        restartButton.textContent = '♻️';
+        restartButton.addEventListener('click', () => {
+            restartRound()
+        });
+
+        let veredict;
+
+        const victoryText = document.querySelector(".victoryText");
+        playerVictoryText = document.createTextNode('player is the 💥WINNER💥 of 5 rounds');
+        computerVictoryText = document.createTextNode('computer is the 💥WINNER💥 of 5 rounds');
+
+
         function playRound(input) {
-            let playerChoice = input;
+            const playerChoice = input;
 
-            const br = document.createElement("br");
-            results.appendChild(br);
-
-
+            if (lastRound.childElementCount > 1) {
+                lastRound.innerHTML = '';
+            }
 
             const playerChoiceText = document.createTextNode(`player choice is ${playerChoice}`);
-            results.appendChild(playerChoiceText);
-            results.appendChild(br.cloneNode(true));
+            lastRound.appendChild(playerChoiceText);
+            lastRound.appendChild(br.cloneNode(true));
 
 
 
-            /*we also call the function to get the computer's choice*/
-            computerChoice = getComputerChoice();
+            const computerChoice = getComputerChoice();
 
             const computerChoiceText = document.createTextNode(`computer choice is ${computerChoice}`);
-            results.appendChild(computerChoiceText);
-            results.appendChild(br.cloneNode(true));
-            results.appendChild(br.cloneNode(true));
+            lastRound.appendChild(computerChoiceText);
+            lastRound.appendChild(br.cloneNode(true));
 
-            /*and we evaluate the results*/
 
+
+            /*we evaluate the results*/
             if (playerChoice === computerChoice) {
                 veredict = "tie";
 
@@ -151,82 +193,87 @@
                 switch (playerChoice) {
                     case "scissors":
                         if (computerChoice == "paper") {
-                            veredict = "player wins";
+                            veredict = "player win";
                         } else if (computerChoice == "rock") {
-                            veredict = "computer wins";
+                            veredict = "computer win";
                         }
                         break
 
                     case "paper":
                         if (computerChoice == "rock") {
-                            veredict = "player wins";
+                            veredict = "player win";
                         } else if (computerChoice == "scissors") {
-                            veredict = "computer wins";
+                            veredict = "computer win";
                         }
                         break
 
                     case "rock":
                         if (computerChoice == "scissors") {
-                            veredict = "player wins";
+                            veredict = "player win";
                         } else if (computerChoice == "paper") {
-                            veredict = "computer wins";
+                            veredict = "computer win";
                         }
                         break
 
                 }
             }
 
-            /*and we load the results into the variables we created*/
-
-            if (veredict === "computer wins") {
+            /*we load the results into the variables we created*/
+            if (veredict === "computer win") {
                 computerVictories++;
-            } else if (veredict === "player wins") {
+            } else if (veredict === "player win") {
                 playerVictories++;
             } else {
                 ties++;
             }
 
-            const veredictText = document.createTextNode(`veredict is ${veredict}`);
-            results.appendChild(veredictText);
-            results.appendChild(br.cloneNode(true));
 
+
+            if (score.childElementCount > 1) {
+                score.innerHTML = '';
+            }
+
+            /*generar los textos que se imprimirán en el div score*/
+
+            const veredictText = document.createTextNode(`this round ended up in a ${veredict}`);
             const playerVictoriesText = document.createTextNode(`player has won ${playerVictories} times`)
             const computerVictoriesText = document.createTextNode(`computer has won ${computerVictories} times`)
 
-            results.appendChild(playerVictoriesText);
-            results.appendChild(br.cloneNode(true));
-            results.appendChild(computerVictoriesText);
-            results.appendChild(br.cloneNode(true));
+            score.appendChild(veredictText);
+            score.appendChild(br.cloneNode(true));
+            score.appendChild(playerVictoriesText);
+            score.appendChild(br.cloneNode(true));
+            score.appendChild(computerVictoriesText);
+            score.appendChild(br.cloneNode(true));
 
-            if (playerVictories == 5) {
-                const playerVictoriesText5 = document.createElement('div');
-                playerVictoriesText5.textContent = 'player is the WINNER of 5 rounds';
-                playerVictoriesText5.style.fontSize = '20px';
-                playerVictoriesText5.style.color = 'red';
-                playerVictoriesText5.style.fontWeight = 'bold';
 
-                console.log(playerVictoriesText5);
+            if (playerVictories == 5 && roundEnded == false) {
+                victoryText.appendChild(playerVictoryText);
+                results.appendChild(restartButton);
 
-                results.appendChild(playerVictoriesText5);
+                roundEnded = true;
             }
 
-            if (computerVictories == 5) {
-                const computerVictoriesText5 = document.createElement('div');
-                computerVictoriesText5.textContent = 'computer is the WINNER of 5 rounds';
-                computerVictoriesText5.style.fontSize = '20px';
-                computerVictoriesText5.style.color = 'red';
-                computerVictoriesText5.style.fontWeight = 'bold';
+            if (computerVictories == 5 && roundEnded == false) {
+                victoryText.appendChild(computerVictoryText);
+                results.appendChild(restartButton);
 
-                console.log(computerVictoriesText5);
-
-                results.appendChild(computerVictoriesText5);
+                roundEnded = true;
             }
-            results.appendChild(br.cloneNode(true));
-            results.appendChild(br.cloneNode(true));
-
         }
 
-        //playRound();
+        function restartRound() {
+            ties = 0;
+            computerVictories = 0;
+            playerVictories = 0;
+
+            lastRound.innerHTML = '';
+            score.innerHTML = '';
+            victoryText.innerHTML = '';
+
+            roundEnded = false;
+            results.removeChild(restartButton);
+        }
 
 
     </script>
