@@ -32,7 +32,7 @@
 
         .results {
             margin: 20px 30px;
-            padding: 10px 30px;
+            padding: 20px 30px;
             border: 5px dashed indianred;
             text-align: center;
         }
@@ -53,6 +53,10 @@
             font-size: 20px;
             color: red;
             font-weight: bold;
+        }
+
+        .restart{
+            text-align: center;
         }
 
         #restartButton {
@@ -83,6 +87,8 @@
 
         </div>
     </div>
+    <div class="restart"></div>
+
     <script>
 
         /*each button will activate the playRound function with the chosen argument*/
@@ -143,6 +149,7 @@
         let ties;
 
         /*y ahora si han ganado mas de 5 rondas que se pueda reempezar el juego con un boton*/
+        const restart = document.querySelector(".restart")
         const restartButton = document.createElement('button');
         restartButton.setAttribute('class', 'choice');
         restartButton.setAttribute('id', 'restartButton');
@@ -245,7 +252,7 @@
 
             if (playerVictories == 5) {
                 victoryText.appendChild(playerVictoryText);
-                results.appendChild(restartButton);
+                restart.appendChild(restartButton);
 
                 document.querySelector('#playerRock').disabled = true;
                 document.querySelector('#playerPaper').disabled = true;
@@ -254,7 +261,7 @@
 
             if (computerVictories == 5) {
                 victoryText.appendChild(computerVictoryText);
-                results.appendChild(restartButton);
+                restart.appendChild(restartButton);
 
                 document.querySelector('#playerRock').disabled = true;
                 document.querySelector('#playerPaper').disabled = true;
@@ -271,7 +278,7 @@
             score.innerHTML = '';
             victoryText.innerHTML = '';
 
-            results.removeChild(restartButton);
+            restart.removeChild(restartButton);
 
             document.querySelector('#playerRock').disabled = false;
             document.querySelector('#playerPaper').disabled = false;
