@@ -9,6 +9,7 @@
             font-family: Georgia, 'Times New Roman', Times, serif;
         }
 
+
         .title {
             color: midnightblue;
         }
@@ -28,6 +29,10 @@
         h1,
         h2 {
             text-align: center;
+        }
+
+        p {
+            margin: 5px;
         }
 
         .results {
@@ -55,7 +60,7 @@
             font-weight: bold;
         }
 
-        .restart{
+        .restart {
             text-align: center;
         }
 
@@ -162,59 +167,79 @@
         let veredict;
 
         const victoryText = document.querySelector(".victoryText");
-        playerVictoryText = document.createTextNode('player is the 💥WINNER💥 of 5 rounds');
-        computerVictoryText = document.createTextNode('computer is the 💥WINNER💥 of 5 rounds');
+        playerVictoryText = document.createElement('p');
+        computerVictoryText = document.createElement('p');
+        playerVictoryText.textContent = 'player is the 💥WINNER💥 of 5 rounds';
+        computerVictoryText.textContent = 'computer is the 💥WINNER💥 of 5 rounds';
 
+        function addChoiceText(input){
+            let textToAdd = '';
+
+            if (input == 'rock') {
+                textToAdd = "👊 rock 👊";
+            } else if (input == 'paper') {
+                textToAdd = "🖐️ paper 🖐️";
+            } else if (input == 'scissors') {
+                textToAdd = "✌️ scissors ✌️";
+            } else {
+                textToAdd = "text added!!!";
+            }
+            return textToAdd;
+        }
 
         function playRound(input) {
             const playerChoice = input;
+            const computerChoice = getComputerChoice();
 
             if (lastRound.childElementCount > 1) {
                 lastRound.innerHTML = '';
             }
 
-            const playerChoiceText = document.createTextNode(`player choice is ${playerChoice}`);
+
+            const playerChoiceText = document.createElement("p");
+            playerChoiceText.textContent = `player choice is ${addChoiceText(playerChoice)}`;
             lastRound.appendChild(playerChoiceText);
-            lastRound.appendChild(br.cloneNode(true));
+
+            const computerChoiceText = document.createElement("p");
+            computerChoiceText.textContent = `computer choice is ${addChoiceText(computerChoice)}`
+            lastRound.appendChild(computerChoiceText);
 
 
 
-            const computerChoice = getComputerChoice();
-
+            /*
             const computerChoiceText = document.createTextNode(`computer choice is ${computerChoice}`);
             lastRound.appendChild(computerChoiceText);
             lastRound.appendChild(br.cloneNode(true));
-
-
+            */
 
             /*we evaluate the results*/
             if (playerChoice === computerChoice) {
-                veredict = "tie";
+                veredict = "🪢 tie 🪢";
 
             } else if (playerChoice !== computerChoice) {
 
                 switch (playerChoice) {
                     case "scissors":
                         if (computerChoice == "paper") {
-                            veredict = "player win";
+                            veredict = "🦸 player 🦸 win";
                         } else if (computerChoice == "rock") {
-                            veredict = "computer win";
+                            veredict = "🤖 computer 🤖 win";
                         }
                         break
 
                     case "paper":
                         if (computerChoice == "rock") {
-                            veredict = "player win";
+                            veredict = "🦸 player 🦸 win";
                         } else if (computerChoice == "scissors") {
-                            veredict = "computer win";
+                            veredict = "🤖 computer 🤖 win";
                         }
                         break
 
                     case "rock":
                         if (computerChoice == "scissors") {
-                            veredict = "player win";
+                            veredict = "🦸 player 🦸 win";
                         } else if (computerChoice == "paper") {
-                            veredict = "computer win";
+                            veredict = "🤖 computer 🤖 win";
                         }
                         break
 
@@ -222,9 +247,9 @@
             }
 
             /*we load the results into the variables we created*/
-            if (veredict === "computer win") {
+            if (veredict === "🤖 computer 🤖 win") {
                 computerVictories++;
-            } else if (veredict === "player win") {
+            } else if (veredict === "🦸 player 🦸 win") {
                 playerVictories++;
             } else {
                 ties++;
@@ -238,16 +263,50 @@
 
             /*generar los textos que se imprimirán en el div score*/
 
-            const veredictText = document.createTextNode(`this round ended up in a ${veredict}`);
-            const playerVictoriesText = document.createTextNode(`player has won ${playerVictories} times`)
-            const computerVictoriesText = document.createTextNode(`computer has won ${computerVictories} times`)
+            function addVeredictText(input){
+            let textToAdd = '';
+
+            if (input == playerVictories) {
+                textToAdd += playerVictories + " times";
+            } else if (input == computerVictories) {
+                textToAdd += computerVictories + " times";
+            } else if (input == ties) {
+                textToAdd += ties + " times";
+            } else {
+                textToAdd += "text added!!!";
+            }
+
+            if (input == 0) {
+                textToAdd += " 🕛";
+            } else if (input == 1) {
+                textToAdd += " 🕑";
+            } else if (input == 2) {
+                textToAdd += " 🕓";
+            } else if (input == 3) {
+                textToAdd += " 🕕";
+            } else if (input == 4) {
+                textToAdd += " 🕘";
+            } else if (input == 5) {
+                textToAdd += " 🕛";
+            } else {
+                textToAdd = "💥";
+            }
+
+            return textToAdd;
+        }
+
+            const veredictText = document.createElement('p');
+            veredictText.textContent =`this round ended up in a ${veredict}`;
+
+            const playerVictoriesText = document.createElement('p');
+            playerVictoriesText.textContent = `player has won ${addVeredictText(playerVictories)}`;
+
+            const computerVictoriesText = document.createElement('p');
+            computerVictoriesText.textContent = `computer has won ${addVeredictText(computerVictories)}`;
 
             score.appendChild(veredictText);
-            score.appendChild(br.cloneNode(true));
             score.appendChild(playerVictoriesText);
-            score.appendChild(br.cloneNode(true));
             score.appendChild(computerVictoriesText);
-            score.appendChild(br.cloneNode(true));
 
 
             if (playerVictories == 5) {
