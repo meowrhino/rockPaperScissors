@@ -4,23 +4,67 @@
 <head>
     <meta charset="UTF-8">
     <title>rockPaperScissors!</title>
+    <style>
+        * {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        .title {
+            color: midnightblue;
+        }
+
+        .options {
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .choice {
+            font-size: 60px;
+            padding: 10px 20px;
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+        }
+
+        #results {
+            margin: 10px;
+            border: 5px dotted indianred;
+        }
+    </style>
 </head>
 
 <body>
+    <div class="title">
+        <h1>fight against a random choice</h1>
+        <h2>what is the weapon of your choice?</h2>
+    </div>
 
+    <div class="options">
+        <button class="choice" id="playerRock">👊</button>
+        <button class="choice" id="playerPaper">🖐️</button>
+        <button class="choice" id="playerScissors">✌️</button>
+    </div>
+    <div class="results">
+
+    </div>
     <script>
 
         /*COMPUTER CHOICE*/
         /*we have to make the computer choose a random choice between rock, paper and scissors
         and for that we want to get an integer from 1 to 3 (1, 2 or 3)*/
+        /*and then we convert that number to a valid option for the game*/
 
+        let computerChoice;
         function getRandomInt(max) {
             return Math.floor(Math.random() * max + 1);
         };
-
-        /*and then we convert that number to a valid option for the game*/
-
         function getComputerChoice() {
+
+
             let number = getRandomInt(3);
             let choice;
 
@@ -42,52 +86,30 @@
 
         /*we prepare the variables we'll need for the round*/
 
-        let computerChoice;
-
-        /*players input and choice are different bc we can only take rock as an answer
-        so we will convert ROCK and roCk into rock later*/
-        let playerInput;
-        let playerChoice;
 
         let veredict;
 
 
 
         /*PLAYER CHOICES*/
-        const body = document.querySelector('body');
+        let playerChoice;
 
-        const playerRock = document.createElement("button");
-        //playerRock.cssText = "id: playerRock"
-        playerRock.setAttribute('id', 'playerRock');
-        playerRock.textContent = "do you choose rock?";
+        const playerRock = document.querySelector("#playerRock");
         playerRock.addEventListener('click', () => {
             playRound("rock");
         });
 
-        const playerPaper = document.createElement("button");
-        playerPaper.setAttribute('id', 'playerPaper');
-        playerPaper.textContent = "do you choose paper?";
+        const playerPaper = document.querySelector("#playerPaper");
         playerPaper.addEventListener('click', () => {
             playRound("paper");
         });
 
-        const playerScissors = document.createElement("button");
-        playerScissors.setAttribute('id', 'playerScissors');
-        playerScissors.textContent = "do you choose scissors?";
+        const playerScissors = document.querySelector("#playerScissors");
         playerScissors.addEventListener('click', () => {
             playRound("scissors");
         });
 
-
-
-        body.appendChild(playerRock);
-        body.appendChild(playerPaper);
-        body.appendChild(playerScissors);
-
-        const results = document.createElement("div");
-
-        body.appendChild(results);
-
+        const results = document.querySelector(".results");
 
         /*THE GAME*/
 
