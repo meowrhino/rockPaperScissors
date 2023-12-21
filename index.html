@@ -55,9 +55,8 @@
             font-weight: bold;
         }
 
-        .restartButton {
-            margin: 10px;
-            padding: 10px 20px;
+        #restartButton {
+            margin: 20px;
         }
     </style>
 </head>
@@ -143,14 +142,11 @@
         let playerVictories = 0;
         let ties;
 
-        /*the game is a best of 5 so we want to show the winner of five 
-        but just once, so we create a boolean that will activate once that is done
-        so that the "if" will not print more than one*/
-        let roundEnded = false;
-
         /*y ahora si han ganado mas de 5 rondas que se pueda reempezar el juego con un boton*/
         const restartButton = document.createElement('button');
-        restartButton.setAttribute('class', 'restartButton');
+        restartButton.setAttribute('class', 'choice');
+        restartButton.setAttribute('id', 'restartButton');
+
         restartButton.textContent = '♻️';
         restartButton.addEventListener('click', () => {
             restartRound()
@@ -247,18 +243,22 @@
             score.appendChild(br.cloneNode(true));
 
 
-            if (playerVictories == 5 && roundEnded == false) {
+            if (playerVictories == 5) {
                 victoryText.appendChild(playerVictoryText);
                 results.appendChild(restartButton);
 
-                roundEnded = true;
+                document.querySelector('#playerRock').disabled = true;
+                document.querySelector('#playerPaper').disabled = true;
+                document.querySelector('#playerScissors').disabled = true;
             }
 
-            if (computerVictories == 5 && roundEnded == false) {
+            if (computerVictories == 5) {
                 victoryText.appendChild(computerVictoryText);
                 results.appendChild(restartButton);
 
-                roundEnded = true;
+                document.querySelector('#playerRock').disabled = true;
+                document.querySelector('#playerPaper').disabled = true;
+                document.querySelector('#playerScissors').disabled = true;
             }
         }
 
@@ -271,8 +271,11 @@
             score.innerHTML = '';
             victoryText.innerHTML = '';
 
-            roundEnded = false;
             results.removeChild(restartButton);
+
+            document.querySelector('#playerRock').disabled = false;
+            document.querySelector('#playerPaper').disabled = false;
+            document.querySelector('#playerScissors').disabled = false;
         }
 
 
