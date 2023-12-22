@@ -60,8 +60,9 @@
             font-weight: bold;
         }
 
-        .restart {
+        .restart, .playerHistory, .computerHistory{
             text-align: center;
+            font-size: 30px;
         }
 
         #restartButton {
@@ -81,6 +82,7 @@
         <button class="choice" id="playerPaper">🖐️</button>
         <button class="choice" id="playerScissors">✌️</button>
     </div>
+
     <div class="results">
         <div class="lastRound">
 
@@ -92,6 +94,17 @@
 
         </div>
     </div>
+
+    <div class="histories">
+
+        <h2>🦸</h2>
+        <div class="playerPreference"></div>
+        <div class="playerHistory"></div>
+        <h2>🤖</h2>
+        <div class="computerPreference"></div>
+        <div class="computerHistory"></div>
+    </div>
+
     <div class="restart"></div>
 
     <script>
@@ -100,16 +113,22 @@
         const playerRock = document.querySelector("#playerRock");
         playerRock.addEventListener('click', () => {
             playRound("rock");
+            playerHistory.textContent += "👊";
+            playerChoseRock += 1;
         });
 
         const playerPaper = document.querySelector("#playerPaper");
         playerPaper.addEventListener('click', () => {
             playRound("paper");
+            playerHistory.textContent += "🖐️";
+            playerChosePaper += 1;
         });
 
         const playerScissors = document.querySelector("#playerScissors");
         playerScissors.addEventListener('click', () => {
             playRound("scissors");
+            playerHistory.textContent += "✌️";
+            playerChoseScissors += 1;
         });
 
 
@@ -117,26 +136,35 @@
         /*the computer's choice is chosen via a random number between 1 and 3
         and then that number is converted into an option*/
         function getRandomInt(max) {
-            return Math.floor(Math.random() * max + 1);
+            const randomInt = Math.floor(Math.random() * max + 1);
+            return randomInt;
         };
 
         function getComputerChoice() {
             let number = getRandomInt(3);
+
             let choice;
 
             switch (number) {
                 case 1:
                     choice = "rock";
+                    computerHistory.textContent += "👊";
+                    computerChoseRock += 1
                     break
 
                 case 2:
                     choice = "paper";
+                    computerHistory.textContent += "🖐️";
+                    computerChosePaper += 1
                     break
 
                 case 3:
                     choice = "scissors";
+                    computerHistory.textContent += "✌️";
+                    computerChoseScissors += 1
                     break
             }
+            console.log(`the number chosen was ${number} and thus the computer chose ${choice}`)
             return choice
         }
 
@@ -171,21 +199,71 @@
         computerVictoryText = document.createElement('p');
         playerVictoryText.textContent = 'player is the 💥WINNER💥 of 5 rounds';
         computerVictoryText.textContent = 'computer is the 💥WINNER💥 of 5 rounds';
+        
+        let playerOrComputer = 0;
 
-        function addChoiceText(input){
+        let computerChoseRock = 0; 
+        let computerChosePaper = 0; 
+        let computerChoseScissors = 0; 
+
+        let playerChoseRock = 0; 
+        let playerChosePaper = 0; 
+        let playerChoseScissors = 0; 
+
+        function addChoiceText(input) {
             let textToAdd = '';
 
             if (input == 'rock') {
                 textToAdd = "👊 rock 👊";
+
+                if (playerOrComputer == 0) {
+                    //playerHistory.textContent += "👊";
+                    playerOrComputer = 1;
+                    console.log('caso 0 => 1 playerOrComputer value after "if" is ' + playerOrComputer);
+                
+                } else if (playerOrComputer == 1) {
+                    //computerHistory.textContent += "👊";
+                    playerOrComputer = 0;
+                    console.log('caso 1 => 0 playerOrComputer value after "if" is ' + playerOrComputer);
+                }
+
             } else if (input == 'paper') {
                 textToAdd = "🖐️ paper 🖐️";
+
+                if (playerOrComputer == 0) {
+                    //playerHistory.textContent += "🖐️";
+                    playerOrComputer = 1;
+                    console.log('caso 0 => 1 playerOrComputer value after "if" is ' + playerOrComputer);
+                
+                } else if (playerOrComputer == 1) {
+                    //computerHistory.textContent += "🖐️";
+                    playerOrComputer = 0;
+                    console.log('caso 1 => 0 playerOrComputer value after "if" is ' + playerOrComputer);
+                }
+
             } else if (input == 'scissors') {
                 textToAdd = "✌️ scissors ✌️";
+
+                if (playerOrComputer == 0) {
+                    //playerHistory.textContent += "✌️";
+                    playerOrComputer = 1;
+                    console.log('caso 0 => 1 playerOrComputer value after "if" is ' + playerOrComputer);
+                
+                } else if (playerOrComputer == 1) {
+                    //computerHistory.textContent += "✌️";
+                    playerOrComputer = 0;
+                    console.log('caso 1 => 0 playerOrComputer value after "if" is ' + playerOrComputer);
+                }
+
             } else {
                 textToAdd = "text added!!!";
+                textToAdd = "   ";
             }
             return textToAdd;
         }
+
+        const playerHistory = document.querySelector(".playerHistory");
+        const computerHistory = document.querySelector(".computerHistory");
 
         function playRound(input) {
             const playerChoice = input;
@@ -263,40 +341,40 @@
 
             /*generar los textos que se imprimirán en el div score*/
 
-            function addVeredictText(input){
-            let textToAdd = '';
+            function addVeredictText(input) {
+                let textToAdd = '';
 
-            if (input == playerVictories) {
-                textToAdd += playerVictories + " times";
-            } else if (input == computerVictories) {
-                textToAdd += computerVictories + " times";
-            } else if (input == ties) {
-                textToAdd += ties + " times";
-            } else {
-                textToAdd += "text added!!!";
+                if (input == playerVictories) {
+                    textToAdd += playerVictories + " times";
+                } else if (input == computerVictories) {
+                    textToAdd += computerVictories + " times";
+                } else if (input == ties) {
+                    textToAdd += ties + " times";
+                } else {
+                    textToAdd += "text added!!!";
+                }
+
+                if (input == 0) {
+                    textToAdd += " 🕛";
+                } else if (input == 1) {
+                    textToAdd += " 🕑";
+                } else if (input == 2) {
+                    textToAdd += " 🕓";
+                } else if (input == 3) {
+                    textToAdd += " 🕕";
+                } else if (input == 4) {
+                    textToAdd += " 🕘";
+                } else if (input == 5) {
+                    textToAdd += " 🕛";
+                } else {
+                    textToAdd = "💥";
+                }
+
+                return textToAdd;
             }
-
-            if (input == 0) {
-                textToAdd += " 🕛";
-            } else if (input == 1) {
-                textToAdd += " 🕑";
-            } else if (input == 2) {
-                textToAdd += " 🕓";
-            } else if (input == 3) {
-                textToAdd += " 🕕";
-            } else if (input == 4) {
-                textToAdd += " 🕘";
-            } else if (input == 5) {
-                textToAdd += " 🕛";
-            } else {
-                textToAdd = "💥";
-            }
-
-            return textToAdd;
-        }
 
             const veredictText = document.createElement('p');
-            veredictText.textContent =`this round ended up in a ${veredict}`;
+            veredictText.textContent = `this round ended up in a ${veredict}`;
 
             const playerVictoriesText = document.createElement('p');
             playerVictoriesText.textContent = `player has won ${addVeredictText(playerVictories)}`;
