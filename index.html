@@ -60,7 +60,9 @@
             font-weight: bold;
         }
 
-        .restart, .playerHistory, .computerHistory{
+        .restart,
+        .playerHistory,
+        .computerHistory {
             text-align: center;
             font-size: 30px;
         }
@@ -81,6 +83,12 @@
         <button class="choice" id="playerRock">👊</button>
         <button class="choice" id="playerPaper">🖐️</button>
         <button class="choice" id="playerScissors">✌️</button>
+    </div>
+
+    <div class="roundResults">
+        <h2>
+            🦸 <span class="roundsPlayer">0</span> vs <span class="roundsComputer">0</span> 🤖
+        </h2>
     </div>
 
     <div class="results">
@@ -199,65 +207,34 @@
         computerVictoryText = document.createElement('p');
         playerVictoryText.textContent = 'player is the 💥WINNER💥 of 5 rounds';
         computerVictoryText.textContent = 'computer is the 💥WINNER💥 of 5 rounds';
-        
+
         let playerOrComputer = 0;
 
-        let computerChoseRock = 0; 
-        let computerChosePaper = 0; 
-        let computerChoseScissors = 0; 
+        let computerChoseRock = 0;
+        let computerChosePaper = 0;
+        let computerChoseScissors = 0;
 
-        let playerChoseRock = 0; 
-        let playerChosePaper = 0; 
-        let playerChoseScissors = 0; 
+        let playerChoseRock = 0;
+        let playerChosePaper = 0;
+        let playerChoseScissors = 0;
+
+        let roundsPlayerWin = 0;
+        let roundsComputerWin = 0;
+
+        const roundsPlayer = document.querySelector(".roundsPlayer")
+        const roundsComputer = document.querySelector(".roundsComputer")
 
         function addChoiceText(input) {
             let textToAdd = '';
 
             if (input == 'rock') {
                 textToAdd = "👊 rock 👊";
-
-                if (playerOrComputer == 0) {
-                    //playerHistory.textContent += "👊";
-                    playerOrComputer = 1;
-                    console.log('caso 0 => 1 playerOrComputer value after "if" is ' + playerOrComputer);
-                
-                } else if (playerOrComputer == 1) {
-                    //computerHistory.textContent += "👊";
-                    playerOrComputer = 0;
-                    console.log('caso 1 => 0 playerOrComputer value after "if" is ' + playerOrComputer);
-                }
-
             } else if (input == 'paper') {
                 textToAdd = "🖐️ paper 🖐️";
-
-                if (playerOrComputer == 0) {
-                    //playerHistory.textContent += "🖐️";
-                    playerOrComputer = 1;
-                    console.log('caso 0 => 1 playerOrComputer value after "if" is ' + playerOrComputer);
-                
-                } else if (playerOrComputer == 1) {
-                    //computerHistory.textContent += "🖐️";
-                    playerOrComputer = 0;
-                    console.log('caso 1 => 0 playerOrComputer value after "if" is ' + playerOrComputer);
-                }
-
             } else if (input == 'scissors') {
                 textToAdd = "✌️ scissors ✌️";
-
-                if (playerOrComputer == 0) {
-                    //playerHistory.textContent += "✌️";
-                    playerOrComputer = 1;
-                    console.log('caso 0 => 1 playerOrComputer value after "if" is ' + playerOrComputer);
-                
-                } else if (playerOrComputer == 1) {
-                    //computerHistory.textContent += "✌️";
-                    playerOrComputer = 0;
-                    console.log('caso 1 => 0 playerOrComputer value after "if" is ' + playerOrComputer);
-                }
-
             } else {
                 textToAdd = "text added!!!";
-                textToAdd = "   ";
             }
             return textToAdd;
         }
@@ -389,6 +366,9 @@
 
             if (playerVictories == 5) {
                 victoryText.appendChild(playerVictoryText);
+                roundsPlayerWin += 1;
+                roundsPlayer.textContent = `${roundsPlayerWin}`;
+
                 restart.appendChild(restartButton);
 
                 document.querySelector('#playerRock').disabled = true;
@@ -398,6 +378,9 @@
 
             if (computerVictories == 5) {
                 victoryText.appendChild(computerVictoryText);
+                roundsComputerWin += 1;
+                roundsComputer.textContent = `${roundsComputerWin}`;
+                
                 restart.appendChild(restartButton);
 
                 document.querySelector('#playerRock').disabled = true;
@@ -405,6 +388,8 @@
                 document.querySelector('#playerScissors').disabled = true;
             }
         }
+
+
 
         function restartRound() {
             ties = 0;
